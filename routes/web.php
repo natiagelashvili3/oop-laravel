@@ -1,8 +1,12 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\AboutController;
-use App\Http\Controllers\HomeController;
+use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\AboutController as AdminAboutController;
+use App\Http\Controllers\Admin\ContactController as AdminContactController;
+use App\Http\Controllers\Frontend\HomeController;
+use App\Http\Controllers\Frontend\AboutController;
+use App\Http\Controllers\Frontend\ContactController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,4 +20,17 @@ use App\Http\Controllers\HomeController;
 */
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('/about', [AboutController::class, 'index'])->name('about');
+Route::get('/contact', [ContactController::class, 'index'])->name('contact');
+
+
+Auth::routes();
+
+Route::prefix('admin')->group(function () {
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('admin.home');
+    Route::get('/about', [AdminAboutController::class, 'index'])->name('admin.about');
+    Route::get('/contact', [AdminContactController::class, 'index'])->name('admin.contact');
+});
+
+
 

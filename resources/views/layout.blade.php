@@ -42,8 +42,7 @@
 
     <!-- page wrap
     ================================================== -->
-    <div id="page" class="s-pagewrap ss-home">
-
+    <div id="page" class="s-pagewrap {{ Route::getCurrentRoute()->getName() == 'home' ? 'ss-home' : ''  }}">
 
         <!-- # site header 
         ================================================== -->
@@ -51,7 +50,7 @@
 
             <div class="s-header__branding">
                 <p class="site-title">
-                    <a href="index.html" rel="home">Spurgeon.</a>
+                    <a href="{{ route('home') }}" rel="home">Spurgeon.</a>
                 </p>
             </div>
 
@@ -62,7 +61,9 @@
                     <h3 class="s-header__nav-heading">Navigate to</h3>
     
                     <ul class="s-header__nav">
-                        <li class="current-menu-item"><a href="index.html" title="">Home</a></li>
+                        <li class="{{ Route::getCurrentRoute()->getName() == 'home' ? 'current-menu-item' : ''  }}">
+                            <a href="{{ route('home') }}" title="">Home</a>
+                        </li>
                         <li class="has-children">
                             <a href="#0" title="" class="">Categories</a>
                             <ul class="sub-menu">
@@ -83,8 +84,12 @@
                             </ul>
                         </li>
                         <li><a href="styles.html" title="">Styles</a></li>
-                        <li><a href="about.html" title="">About</a></li>
-                        <li><a href="contact.html" title="">Contact</a></li>
+                        <li class="{{ Route::getCurrentRoute()->getName() == 'about' ? 'current-menu-item' : ''  }}">
+                            <a href="{{ route('about') }}" title="">About</a>
+                        </li>
+                        <li class="{{ Route::getCurrentRoute()->getName() == 'contact' ? 'current-menu-item' : ''  }}">
+                            <a href="{{ route('contact') }}" title="">Contact</a>
+                        </li>
                     </ul> <!-- end s-header__nav -->
 
                 </nav> <!-- end s-header__nav-wrap -->
@@ -181,8 +186,8 @@
                                 <li><a href="index.html">Home</a></li>
                                 <li><a href="category.html">Categories</a></li>
                                 <li><a href="category.html">Blog</a></li>
-                                <li><a href="about.html">About</a></li>
-                                <li><a href="about.html">Contact</a></li>
+                                <li><a href="{{ route('about') }}">About</a></li>
+                                <li><a href="{{ route('contact') }}">Contact</a></li>
                                 <li><a href="#0">Terms & Policy</a></li>
                             </ul>
                         </div>
