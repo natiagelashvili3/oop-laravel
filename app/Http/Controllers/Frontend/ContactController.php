@@ -7,6 +7,12 @@ use Illuminate\Http\Request;
 
 class ContactController extends Controller
 {
+
+    public function __construct()
+    {
+        // $this->middleware('test');
+    }
+
     public function index() {
         return view('frontend.contact');
     }

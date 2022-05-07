@@ -28,8 +28,10 @@ Auth::routes();
 
 Route::prefix('admin')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('admin.home');
-    Route::get('/about', [AdminAboutController::class, 'index'])->name('admin.about');
     Route::get('/contact', [AdminContactController::class, 'index'])->name('admin.contact');
+
+    Route::get('/about', [AdminAboutController::class, 'index'])->name('admin.about');
+    Route::post('/about', [AdminAboutController::class, 'update'])->name('admin.about.update');
 });
 
 
