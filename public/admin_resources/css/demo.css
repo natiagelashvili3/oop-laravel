@@ -105,3 +105,13 @@
   text-align: center;
   margin-top: 1rem;
 }
+.alert-danger{
+  margin-top: 10px;
+}
+
+a.btn.btn-primary{
+  color: white;
+}
+a.btn.btn-primary:hover{
+  color: white;
+}

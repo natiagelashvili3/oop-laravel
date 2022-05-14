@@ -155,6 +155,13 @@
               </a>
             </li>
 
+            <li class="menu-item {{ Route::getCurrentRoute()->getName() == 'admin.posts' ? 'active' : ''  }}">
+              <a href="{{ route('admin.posts') }}" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-crown"></i>
+                <div data-i18n="About">Posts</div>
+              </a>
+            </li>
+
             <li class="menu-item {{ Route::getCurrentRoute()->getName() == 'admin.contact' ? 'active' : ''  }}">
               <a href="{{ route('admin.contact') }}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-crown"></i>

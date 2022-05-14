@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\About;
+use App\Http\Requests\AdminAboutRequest;
 
 class AboutController extends Controller
 {
@@ -34,11 +35,19 @@ class AboutController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Requests\AdminAboutRequest $request
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request)
+    public function update(AdminAboutRequest $request)
     {
+        // $request->validate([
+        //     'title' => 'required',
+        //     'short_text' => 'required',
+        //     'text' => 'required'
+        // ], [
+        //     'title.required' => 'გთხოვთ მიუთითოთ სათაური1'
+        // ]);
+
         $title = $request->title;
         $short_text = $request->short_text;
         $text = $request->text;
