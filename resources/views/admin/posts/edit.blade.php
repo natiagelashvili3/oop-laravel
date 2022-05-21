@@ -11,7 +11,7 @@
                 <div class="col-md-12">
                   <div class="card mb-4">
                     <div class="card-body">
-                        <form action="{{ route('admin.posts.update') }}" method="post">
+                        <form action="{{ route('admin.posts.update') }}" method="post" enctype="multipart/form-data">
                             @csrf
                             <input type="hidden" name="id" value="{{ $data['post']->id }}">
                             <div class="mb-3">
@@ -36,8 +36,11 @@
                                 @enderror
                             </div>
                             <div class="mb-3">
+                                @if($data['post']->image)
+                                    <img style="width: 150px;display:block" src="{{ asset('storage/images/'.$data['post']->image) }}" alt="">
+                                @endif
                                 <label for="text" class="form-label">Image</label>
-                                <input type="file" class="form-control"> 
+                                <input type="file" class="form-control" name="image"> 
                             </div>
                             <div class="mb-3">
                                 <button class="btn btn-primary">Update</button>

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Requests\AdminPostsRequest;
 use App\Models\Post;
+use Illuminate\Support\Str;
 
 class PostsController extends Controller
 {
@@ -26,7 +27,7 @@ class PostsController extends Controller
      */
     public function index()
     {
-        $post = Post::orderBy('id', 'DESC')->get();
+        $post = Post::orderBy('id', 'DESC')->paginate(10);
 
         $data = [
             'posts' => $post
@@ -56,12 +57,28 @@ class PostsController extends Controller
         $title = $request->input('title');
         $text = $request->input('text');
         $short_text = $request->input('short_text');
+        $slug = Str::slug($title);
 
-        Post::create([
+        $data = [
             'title' => $title,
             'text' => $text,
-            'short_text' => $short_text
-        ]);
+            'short_text' => $short_text,
+            'slug' => $slug
+        ];
+
+        if($request->has('image') && $request->file('image') != null) {
+            $image = $request->file('image');
+
+            $name = str_replace(' ', '_', $title) . '_' . time() . '.' . $image->getClientOriginalExtension();
+
+            $folderName = 'public/images/';
+
+            $image->storeAs($folderName, $name);
+
+            $data['image'] = $name;
+        }
+
+        Post::create($data);
 
         return redirect(route('admin.posts'));
     }
@@ -96,12 +113,29 @@ class PostsController extends Controller
         $text = $request->input('text');
         $short_text = $request->input('short_text');
         $id = $request->input('id');
+        $slug = Str::slug($title);
 
         Post::where('id', $id)->update([
             'title' => $title,
             'text' => $text,
-            'short_text' => $short_text
+            'short_text' => $short_text,
+            'slug' => $slug
         ]);
+
+        if($request->has('image') && $request->file('image') != null) {
+            $image = $request->file('image');
+
+            $name = str_replace(' ', '_', $title) . '_' . time() . '.' . $image->getClientOriginalExtension();
+
+            $folderName = 'public/images/';
+
+            $image->storeAs($folderName, $name);
+
+            Post::where('id', $id)->update([
+                'image' => $name
+            ]);
+
+        }
 
         return redirect(route('admin.posts'));
     }

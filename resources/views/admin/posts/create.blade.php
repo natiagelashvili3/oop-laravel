@@ -11,7 +11,7 @@
                 <div class="col-md-12">
                   <div class="card mb-4">
                     <div class="card-body">
-                        <form action="{{ route('admin.posts.store') }}" method="post">
+                        <form action="{{ route('admin.posts.store') }}" method="post" enctype="multipart/form-data">
                             @csrf
                             <div class="mb-3">
                                 <label for="title" class="form-label">Title</label>
@@ -36,7 +36,7 @@
                             </div>
                             <div class="mb-3">
                                 <label for="text" class="form-label">Image</label>
-                                <input type="file" class="form-control"> 
+                                <input type="file" class="form-control" name="image"> 
                             </div>
                             <div class="mb-3">
                                 <button class="btn btn-primary">Add</button>
