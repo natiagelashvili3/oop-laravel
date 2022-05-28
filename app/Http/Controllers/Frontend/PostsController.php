@@ -8,6 +8,16 @@ use App\Models\Post;
 
 class PostsController extends Controller
 {
+
+    public function index()
+    {
+        $data = [
+            'posts' => Post::orderBy('id', 'desc')->paginate(12)
+        ];
+
+        return view('frontend.post.index')->with('data', $data);
+    }
+    
     public function view($slug, $id) {
 
         $post = Post::where('id', $id)->first();

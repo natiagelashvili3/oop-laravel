@@ -64,7 +64,9 @@
                         <li class="{{ Route::getCurrentRoute()->getName() == 'home' ? 'current-menu-item' : ''  }}">
                             <a href="{{ route('home') }}" title="">Home</a>
                         </li>
-                        <li><a href="styles.html" title="">Blog</a></li>
+                        <li class="{{ Route::getCurrentRoute()->getName() == 'post.index' ? 'current-menu-item' : ''  }}">
+                            <a href="{{ route('post.index') }}" title="">Blog</a>
+                        </li>
                         <li class="{{ Route::getCurrentRoute()->getName() == 'about' ? 'current-menu-item' : ''  }}">
                             <a href="{{ route('about') }}" title="">About</a>
                         </li>

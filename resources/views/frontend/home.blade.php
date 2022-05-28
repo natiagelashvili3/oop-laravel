@@ -141,16 +141,5 @@
 
     </div> <!-- end bricks -->
 
-
-
-    <div>
-        @foreach ($data['slides'] as $item)
-            <div class="item">
-                <p>{{ $item->title . ' - ' .$item->short_text . ' - ' . $item->header_title }}</p>
-            </div>
-        @endforeach
-    </div>
-
-
 </section> 
 @endsection

@@ -22,10 +22,15 @@ use App\Http\Controllers\Frontend\PostsController;
 */
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
+
+Route::get('/test-mail', [ContactController::class, 'test'])->name('mail.test');
+
 Route::get('/about', [AboutController::class, 'index'])->name('about');
 Route::get('/contact', [ContactController::class, 'index'])->name('contact');
+Route::post('/contact/send', [ContactController::class, 'send'])->name('contact.send');
 
-Route::get('/post/{slug}/{id}', [PostsController::class, 'view'])->name('post.view');
+Route::get('/posts', [PostsController::class, 'index'])->name('post.index');
+Route::get('/posts/{slug}/{id}', [PostsController::class, 'view'])->name('post.view');
 
 
 Auth::routes();

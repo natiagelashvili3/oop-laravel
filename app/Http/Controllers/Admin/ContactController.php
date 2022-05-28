@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Contact;
 
 class ContactController extends Controller
 {
@@ -25,7 +26,11 @@ class ContactController extends Controller
      */
     public function index()
     {
-        return view('admin.contact.index');
+        $data = [
+            'contact' => Contact::orderBy('id', 'desc')->paginate(10)
+        ];
+
+        return view('admin.contact.index')->with('data', $data);
     }
 
     /**
