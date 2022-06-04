@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Http\Requests\AdminPostsRequest;
 use App\Models\Post;
 use Illuminate\Support\Str;
+use App\Models\Category;
+use App\Models\Tag;
 
 class PostsController extends Controller
 {
@@ -43,7 +45,12 @@ class PostsController extends Controller
      */
     public function create()
     {
-        return view('admin.posts.create');
+        $data = [
+            'categories' => Category::all() ,
+            'tags' => Tag::all()
+        ];
+
+        return view('admin.posts.create')->with('data', $data);
     }
 
     /**
@@ -58,12 +65,15 @@ class PostsController extends Controller
         $text = $request->input('text');
         $short_text = $request->input('short_text');
         $slug = Str::slug($title);
+        $category_id = $request->input('category_id');
+        $tags_id = $request->input('tag_id');
 
         $data = [
             'title' => $title,
             'text' => $text,
             'short_text' => $short_text,
-            'slug' => $slug
+            'slug' => $slug,
+            'category_id' => $category_id
         ];
 
         if($request->has('image') && $request->file('image') != null) {
@@ -78,7 +88,11 @@ class PostsController extends Controller
             $data['image'] = $name;
         }
 
-        Post::create($data);
+        $post = Post::create($data);
+        
+        if($tags_id) {
+            $post->tags()->sync($tags_id);
+        }
 
         return redirect(route('admin.posts'));
     }
@@ -92,9 +106,13 @@ class PostsController extends Controller
     public function edit($id)
     {
         $post = Post::where('id', $id)->first();
+        
+        // dd($post->tags()->allRelatedIds()->toArray());
 
         $data = [
-            'post' => $post
+            'post' => $post,
+            'categories' => Category::all(),
+            'tags' => Tag::all()
         ];
 
         return view('admin.posts.edit')->with('data', $data);
@@ -109,17 +127,22 @@ class PostsController extends Controller
      */
     public function update(AdminPostsRequest $request)
     {
+        
         $title = $request->input('title');
         $text = $request->input('text');
         $short_text = $request->input('short_text');
         $id = $request->input('id');
+        $category_id = $request->input('category_id');
         $slug = Str::slug($title);
 
-        Post::where('id', $id)->update([
+        $post = Post::find($id);
+
+        $post->update([
             'title' => $title,
             'text' => $text,
             'short_text' => $short_text,
-            'slug' => $slug
+            'slug' => $slug,
+            'category_id' => $category_id
         ]);
 
         if($request->has('image') && $request->file('image') != null) {
@@ -131,10 +154,14 @@ class PostsController extends Controller
 
             $image->storeAs($folderName, $name);
 
-            Post::where('id', $id)->update([
+            $post->update([
                 'image' => $name
             ]);
 
+        }
+
+        if($request->input('tag_id')) {
+            $post->tags()->sync($request->input('tag_id'));
         }
 
         return redirect(route('admin.posts'));

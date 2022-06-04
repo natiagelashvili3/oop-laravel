@@ -35,6 +35,32 @@
                                 @enderror
                             </div>
                             <div class="mb-3">
+                                <label for="category" class="form-label">Category</label>
+                                <select name="category_id" class="form-control">
+                                    @foreach ($data['categories'] as $item)
+                                        <option value="{{ $item->id }}">{{ $item->name }}</option>
+                                    @endforeach
+                                </select>
+                                @error('title')
+                                    <div class="alert alert-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="category" class="form-label">Tags</label>
+                                <br>
+                                @foreach ($data['tags'] as $item)
+                                    <div>
+                                        <input type="checkbox" id="tag_id" name="tag_id[]" value="{{ $item->id }}"> {{ $item->name }}
+                                    </div>
+                                @endforeach
+                                @error('title')
+                                    <div class="alert alert-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            
+                            <div class="mb-3">
                                 <label for="text" class="form-label">Image</label>
                                 <input type="file" class="form-control" name="image"> 
                             </div>
